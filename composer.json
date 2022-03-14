@@ -1,0 +1,58 @@
+{
+    "name": "go2flow/psp-client",
+    "description": "Go2Flow PSPClient",
+    "keywords": [
+        "go2flow",
+        "pspserver"
+    ],
+    "homepage": "https://github.com/go2flow/psp-client",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Maximilian Kern",
+            "email": "maximilian.kern@go2flow.ch",
+            "role": "Developer"
+        },
+        {
+            "name": "Marcel Saß",
+            "email": "marcel.sass@go2flow.ch",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.1",
+        "illuminate/support": "^v9.3.0"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Go2Flow\\PSPClient\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Go2Flow\\PSPClient\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Go2Flow\\PSPClient\\PSPClientServiceProvider"
+            ],
+            "aliases": {
+                "PSPServer": "Go2Flow\\PSPClient\\PSPClientFacade"
+            }
+        }
+    }
+}
