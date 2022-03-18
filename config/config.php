@@ -4,5 +4,9 @@
  * You can place your custom package configuration in here.
  */
 return [
-    'middleware' => ['web', 'auth']
+
+    'system_identifier' => 'courzly',
+
+    'middleware' => ['web', 'auth'],
+
 ];
