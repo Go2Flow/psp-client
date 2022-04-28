@@ -62,9 +62,9 @@ class G2FApiService extends Constants
 
     /**
      * @param Merchant $merchant
-     * @return \Psr\Http\Message\StreamInterface
+     * @return string|null
      */
-    public function createMerchant(Merchant $merchant): \Psr\Http\Message\StreamInterface
+    public function createMerchant(Merchant $merchant): null|string
     {
         $response = $this->sendRequest( 'POST','service/merchant', [
             'body' => $merchant->toJson(),
@@ -74,7 +74,13 @@ class G2FApiService extends Constants
             ],
         ]);
 
-        return $response->getBody();
+        if($response) {
+            dd(json_decode($response->getBody()));
+        } else {
+
+        }
+
+        return null;
     }
 
     /**

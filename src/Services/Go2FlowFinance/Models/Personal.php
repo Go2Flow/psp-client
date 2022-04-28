@@ -7,13 +7,18 @@ class Personal
 
     private $personal;
 
+    public function __construct()
+    {
+        $this->personal = collect([]);
+    }
+
     /**
      * @param string $company
      * @return $this
      */
     public function setCompany(string $company): static
     {
-        $this->personal->company = $company;
+        $this->personal->put('company', $company);
 
         return $this;
     }
@@ -24,7 +29,7 @@ class Personal
      */
     public function setSalutation(string $salutation): static
     {
-        $this->personal->salutation = $salutation;
+        $this->personal->put('salutation', $salutation);
 
         return $this;
     }
@@ -35,7 +40,7 @@ class Personal
      */
     public function setFirstName(string $first_name): static
     {
-        $this->personal->first_name = $first_name;
+        $this->personal->put('first_name', $first_name);
 
         return $this;
     }
@@ -46,7 +51,7 @@ class Personal
      */
     public function setLastName(string $last_name): static
     {
-        $this->personal->last_name = $last_name;
+        $this->personal->put('last_name', $last_name);
 
         return $this;
     }
@@ -57,7 +62,7 @@ class Personal
      */
     public function setAddress(string $address): static
     {
-        $this->personal->address = $address;
+        $this->personal->put('address', $address);
 
         return $this;
     }
@@ -68,7 +73,7 @@ class Personal
      */
     public function setZip(string $zip): static
     {
-        $this->personal->zip = $zip;
+        $this->personal->put('zip', $zip);
 
         return $this;
     }
@@ -79,7 +84,7 @@ class Personal
      */
     public function setCity(string $city): static
     {
-        $this->personal->city = $city;
+        $this->personal->put('city', $city);
 
         return $this;
     }
@@ -90,7 +95,7 @@ class Personal
      */
     public function setCountry($country): static
     {
-        $this->personal->country = $country;
+        $this->personal->put('country', $country);
 
         return $this;
     }
@@ -101,7 +106,7 @@ class Personal
      */
     public function setPhonePrefix(string $phone_prefix): static
     {
-        $this->personal->phone_prefix = $phone_prefix;
+        $this->personal->put('phone_prefix', $phone_prefix);
 
         return $this;
     }
@@ -112,7 +117,7 @@ class Personal
      */
     public function setPhoneNumber($phone_number): static
     {
-        $this->personal->phone_number = $phone_number;
+        $this->personal->put('phone_number', $phone_number);
 
         return $this;
     }
@@ -123,7 +128,7 @@ class Personal
      */
     public function setBusiness(int $business): static
     {
-        $this->personal->business = $business;
+        $this->personal->put('business', $business);
 
         return $this;
     }
@@ -134,7 +139,7 @@ class Personal
      */
     public function setLegalForm(int $legal_form): static
     {
-        $this->personal->legal_form = $legal_form;
+        $this->personal->put('legal_form', $legal_form);
 
         return $this;
     }
@@ -145,7 +150,7 @@ class Personal
      */
     public function setEmployees(int $employees): static
     {
-        $this->personal->employees = $employees;
+        $this->personal->put('employees', $employees);
 
         return $this;
     }
@@ -156,7 +161,7 @@ class Personal
      */
     public function setFieldOfCompetence(int $field_of_competence): static
     {
-        $this->personal->field_of_competence = $field_of_competence;
+        $this->personal->put('field_of_competence', $field_of_competence);
 
         return $this;
     }
@@ -167,7 +172,7 @@ class Personal
      */
     public function setVatNr(string $vat_nr): static
     {
-        $this->personal->vat_nr = $vat_nr;
+        $this->personal->put('vat_nr', $vat_nr);
 
         return $this;
     }

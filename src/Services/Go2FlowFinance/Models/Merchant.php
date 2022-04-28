@@ -5,7 +5,15 @@ namespace Go2Flow\PSPClient\Services\Go2FlowFinance\Models;
 class Merchant
 {
 
+    /**
+     * @var \Illuminate\Support\Collection
+     */
     private $merchant;
+
+    public function __construct()
+    {
+        $this->merchant = collect([]);
+    }
 
     /**
      * @return string
@@ -21,7 +29,7 @@ class Merchant
      */
     public function setSendWelcomeMail(string $send_welcome_mail): static
     {
-        $this->merchant->send_welcome_mail = $send_welcome_mail;
+        $this->merchant->put('send_welcome_mail', $send_welcome_mail);
 
         return $this;
     }
@@ -32,7 +40,7 @@ class Merchant
      */
     public function setActivatePSP36(int $activate_psp_36): static
     {
-        $this->merchant->activate_psp_36 = $activate_psp_36;
+        $this->merchant->put('activate_psp_36', $activate_psp_36);
 
         return $this;
     }
@@ -43,7 +51,7 @@ class Merchant
      */
     public function setSubdomain(string $subdomain): static
     {
-        $this->merchant->subdomain = $subdomain;
+        $this->merchant->put('subdomain', $subdomain);
 
         return $this;
     }
@@ -54,7 +62,7 @@ class Merchant
      */
     public function setEmail(string $email): static
     {
-        $this->merchant->email = $email;
+        $this->merchant->put('email', $email);
 
         return $this;
     }
@@ -65,7 +73,7 @@ class Merchant
      */
     public function setLanguage(string $language): static
     {
-        $this->merchant->language = $language;
+        $this->merchant->put('language', $language);
 
         return $this;
     }
@@ -76,7 +84,7 @@ class Merchant
      */
     public function setReference(string $reference): static
     {
-        $this->merchant->reference = $reference;
+        $this->merchant->put('reference', $reference);
 
         return $this;
     }
@@ -87,7 +95,7 @@ class Merchant
      */
     public function setMerchantData(Personal $personal): static
     {
-        $this->merchant->merchant_data = $personal;
+        $this->merchant->put('merchant_data', $personal->toArray());
 
         return $this;
     }
@@ -97,7 +105,7 @@ class Merchant
      */
     public function toJson(): string
     {
-        return collect($this->personal)->toJson();
+        return $this->merchant->toJson();
     }
 
     /**
@@ -107,6 +115,6 @@ class Merchant
      */
     public function toArray(): array
     {
-        return collect($this->personal)->toArray();
+        return $this->merchant->toArray();
     }
 }
