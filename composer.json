@@ -22,7 +22,8 @@
     ],
     "require": {
         "php": "^8.0|^8.1",
-        "illuminate/support": "^v9.3.0"
+        "illuminate/support": "^v9.3.0",
+        "payrexx/payrexx": "dev-master"
     },
     "require-dev": {
 
