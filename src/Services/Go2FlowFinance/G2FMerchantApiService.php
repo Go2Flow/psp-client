@@ -115,7 +115,8 @@ class G2FMerchantApiService extends Constants
         dd($response);**/
     }
 
-    public function createGateway(string $instanceName, string $secret, Gateway $gateway) {
+    public function createGateway(string $instanceName, string $secret, Gateway $gateway): \Payrexx\Models\Response\Gateway
+    {
 
         $payrexx = new Payrexx($instanceName, $secret);
 
