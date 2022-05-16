@@ -3,6 +3,7 @@
 namespace Go2Flow\PSPClient\Http\Controllers\API;
 
 use Go2Flow\PSPClient\Services\Go2FlowFinance\G2FApiService;
+use Go2Flow\PSPClient\Services\Go2FlowFinance\G2FMerchantApiService;
 use Go2Flow\SaasRegisterLogin\Http\Controllers\Controller;
 use Go2Flow\SaasRegisterLogin\Http\Requests\Api\TeamCreateRequest;
 use Go2Flow\SaasRegisterLogin\Http\Requests\Api\TeamUpdateBankRequest;
@@ -27,26 +28,22 @@ class PaymentController extends Controller
 
     }
 
-    public function users()
+    public function getAvailablePaymentMethods(): \Illuminate\Http\JsonResponse
     {
-        $team = currentTeam();
-        if ($team) {
-            return UserResource::collection(currentTeam()->users->load('roles'));
-        }
-        abort('401', 'Unauthenticated');
-    }
+        $team = auth()->user();
 
-    public function createGateway()
-    {
         $go2finance = new G2FApiService();
-        $gateway = $go2finance->createGateway();
-        dd('Gateway created', $gateway);
+        $apiSecret = $go2finance->getMerchantApiSecret($team);
+
+        $go2finance = new G2FMerchantApiService();
+        $paymentMethods = $go2finance->getAvailablePaymentMethods($team->psp_instance, $apiSecret);
+        return response()->json(['paymentMethods' => $paymentMethods]);
     }
 
     public function updatePSPConfiguration()
     {
         $go2finance = new G2FApiService();
-         $go2finance->updatePSPConfiguration();
-        dd('Currencies added');
+        $configuration = $go2finance->updatePSPConfiguration();
+        return $configuration;
     }
 }

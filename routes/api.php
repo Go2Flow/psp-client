@@ -1,5 +1,6 @@
 <?php
 
+use Go2Flow\PSPClient\Http\Controllers\API\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -7,9 +8,10 @@ Route::group([
     'prefix' => 'api'
 ], function () {
 
-    Route::group(['middleware' => ['api'], 'prefix' => 'psp-client'], function () {
+    Route::group(['middleware' => ['api', 'auth:sanctum', 'auth-is-team'], 'prefix' => 'psp-client'], function () {
 
-        //Route::get('/client/payment/methods', GetClientPaymentMethodsController::class);
+        Route::get('/go2flow/finance/update/psp/configuration', [PaymentController::class, 'updatePSPConfiguration']);
+        Route::get('/go2flow/finance/payment/methods', [PaymentController::class, 'getAvailablePaymentMethods']);
 
     });
 });
