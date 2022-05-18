@@ -129,8 +129,9 @@ class G2FMerchantApiService extends Constants
         $payrexx = new Payrexx($instanceName, $secret);
 
         try {
-            $response = $payrexx->create($gateway);
-            return $response;
+
+            return $payrexx->create($gateway);
+
         } catch (\Payrexx\PayrexxException $e) {
            Log::error('Payrexx Error: '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
         }
