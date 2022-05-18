@@ -116,6 +116,13 @@ class G2FMerchantApiService extends Constants
         dd($response);**/
     }
 
+    /**
+     * @param string $instanceName
+     * @param string $secret
+     * @param Gateway $gateway
+     * @return bool|\Payrexx\Models\Response\Gateway
+     * @throws \Payrexx\PayrexxException
+     */
     public function createGateway(string $instanceName, string $secret, Gateway $gateway): bool|\Payrexx\Models\Response\Gateway
     {
 
@@ -125,7 +132,7 @@ class G2FMerchantApiService extends Constants
             $response = $payrexx->create($gateway);
             return $response;
         } catch (\Payrexx\PayrexxException $e) {
-           Log::error('Payrexx Error: '.$e->getMessage());
+           Log::error('Payrexx Error: '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
         }
 
         return false;
