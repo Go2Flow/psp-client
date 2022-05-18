@@ -5,6 +5,7 @@ namespace Go2Flow\PSPClient\Services\Go2FlowFinance;
 use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Merchant;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Log;
 use Payrexx\Models\Request\Gateway;
 use Payrexx\Payrexx;
 
@@ -115,7 +116,7 @@ class G2FMerchantApiService extends Constants
         dd($response);**/
     }
 
-    public function createGateway(string $instanceName, string $secret, Gateway $gateway): \Payrexx\Models\Response\Gateway
+    public function createGateway(string $instanceName, string $secret, Gateway $gateway): bool|\Payrexx\Models\Response\Gateway
     {
 
         $payrexx = new Payrexx($instanceName, $secret);
@@ -124,7 +125,7 @@ class G2FMerchantApiService extends Constants
             $response = $payrexx->create($gateway);
             return $response;
         } catch (\Payrexx\PayrexxException $e) {
-            print $e->getMessage();
+           Log::error('Payrexx Error: '.$e->getMessage(), $e->getTrace());
         }
         return false;
     }
