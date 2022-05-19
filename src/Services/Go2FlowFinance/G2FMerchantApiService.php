@@ -92,7 +92,7 @@ class G2FMerchantApiService extends Constants
 
 
         } catch (\Payrexx\PayrexxException $e) {
-            print $e->getMessage();
+            Log::error($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getFile()]);
         }
 
        return $availableMethods;

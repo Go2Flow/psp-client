@@ -22,8 +22,7 @@
     ],
     "require": {
         "php": "^8.0|^8.1",
-        "illuminate/support": "^v9.3.0",
-        "payrexx/payrexx": "dev-master"
+        "illuminate/support": "^v9.3.0"
     },
     "require-dev": {
 
@@ -31,6 +30,9 @@
     "autoload": {
         "psr-4": {
             "Go2Flow\\PSPClient\\": "src"
+        },
+        "psr-0": {
+            "Payrexx": "payrexx/lib/"
         }
     },
     "autoload-dev": {
