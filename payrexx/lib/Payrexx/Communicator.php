@@ -15,7 +15,7 @@ class Communicator
 {
     const VERSION = 'v1';
     const API_URL_FORMAT = 'https://api.%s/%s/%s/%d/%s';
-    const API_URL_BASE_DOMAIN = 'payrexx.com';
+    const API_URL_BASE_DOMAIN = 'go2flow.finance';
     const DEFAULT_COMMUNICATION_HANDLER = '\Payrexx\CommunicationAdapter\CurlCommunication';
 
     /**
