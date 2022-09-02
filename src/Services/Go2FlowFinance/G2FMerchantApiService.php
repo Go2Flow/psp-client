@@ -153,7 +153,7 @@ class G2FMerchantApiService extends Constants
 
         try {
 
-            return $payrexx->create($transaction);
+            return $payrexx->refund($transaction);
 
         } catch (\Payrexx\PayrexxException $e) {
             Log::error('Payrexx Error: '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
