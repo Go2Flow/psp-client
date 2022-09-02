@@ -42,9 +42,9 @@ class G2FApiService extends Constants
      * @param $method
      * @param $path
      * @param $payload
-     * @return false|GuzzleHttp\Psr7\Response
+     * @return null|GuzzleHttp\Psr7\Response
      */
-    private function sendRequest($method, $path, $payload): Response
+    private function sendRequest($method, $path, $payload): ?Response
     {
         try {
 
