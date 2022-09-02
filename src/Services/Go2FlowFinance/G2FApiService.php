@@ -6,6 +6,7 @@ use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Merchant;
 use Go2Flow\SaasRegisterLogin\Models\Team;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Response;
 use Payrexx\Models\Request\Gateway;
 use Payrexx\Payrexx;
 
@@ -41,9 +42,9 @@ class G2FApiService extends Constants
      * @param $method
      * @param $path
      * @param $payload
-     * @return false|\Psr\Http\Message\ResponseInterface
+     * @return false|GuzzleHttp\Psr7\Response
      */
-    private function sendRequest($method, $path, $payload): ResponseInterface
+    private function sendRequest($method, $path, $payload): Response
     {
         try {
 
@@ -62,7 +63,7 @@ class G2FApiService extends Constants
             var_dump($payload);
             echo "------------------------------------------------------\n";
         }
-        return false;
+        return null;
     }
 
     /**
