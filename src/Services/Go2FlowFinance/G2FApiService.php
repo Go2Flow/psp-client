@@ -102,7 +102,7 @@ class G2FApiService extends Constants
             ],
         ]);
 
-        if($response->getStatusCode() === 200) {
+        if($response && $response->getStatusCode() === 200) {
             return true;
         }
 
