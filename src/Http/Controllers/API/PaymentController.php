@@ -18,6 +18,7 @@ use Go2Flow\SaasRegisterLogin\Repositories\TeamRepositoryInterface;
 use Go2Flow\SaasRegisterLogin\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class PaymentController extends Controller
@@ -31,13 +32,14 @@ class PaymentController extends Controller
     public function getAvailablePaymentMethods(): \Illuminate\Http\JsonResponse
     {
         $team = auth()->user();
+        return Cache::remember('psp_client_payment_methods_'.$team->id, 60*30, function () use ($team) {
+            $go2finance = new G2FApiService();
+            $apiSecret = $go2finance->getMerchantApiSecret($team);
 
-        $go2finance = new G2FApiService();
-        $apiSecret = $go2finance->getMerchantApiSecret($team);
-
-        $go2finance = new G2FMerchantApiService();
-        $paymentMethods = $go2finance->getAvailablePaymentMethods($team->psp_instance, $apiSecret);
-        return response()->json(['paymentMethods' => $paymentMethods]);
+            $go2finance = new G2FMerchantApiService();
+            $paymentMethods = $go2finance->getAvailablePaymentMethods($team->psp_instance, $apiSecret);
+            return response()->json(['paymentMethods' => $paymentMethods]);
+        });
     }
 
     public function updatePSPConfiguration()
