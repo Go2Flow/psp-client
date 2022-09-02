@@ -43,7 +43,8 @@ class G2FApiService extends Constants
      * @param $payload
      * @return false|\Psr\Http\Message\ResponseInterface
      */
-    private function sendRequest($method, $path, $payload) {
+    private function sendRequest($method, $path, $payload): ResponseInterface
+    {
         try {
 
             $client = $this->getClient();
@@ -83,6 +84,28 @@ class G2FApiService extends Constants
         }
 
         return null;
+    }
+
+    /**
+     * @param string $merchantId
+     * @param string $url
+     * @return bool
+     */
+    public function createWebhook(string $merchantId, string $url): bool
+    {
+        $response = $this->sendRequest( 'POST','service/merchant/'.$merchantId.'/api/webhook', [
+            'body' => '{"type":"json","url":'.$url.'}',
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        if($response->getStatusCode() === 200) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
