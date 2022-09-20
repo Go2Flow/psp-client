@@ -93,7 +93,12 @@ class G2FMerchantApiService extends Constants
 
 
         } catch (\Payrexx\PayrexxException $e) {
-            Log::error($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getFile()]);
+            Log::error($e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getFile(),
+                'secret' => $secret,
+                'instance_name' => $instanceName,
+            ]);
         }
 
        return $availableMethods;
@@ -134,7 +139,12 @@ class G2FMerchantApiService extends Constants
             return $payrexx->create($gateway);
 
         } catch (\Payrexx\PayrexxException $e) {
-           Log::error('Payrexx Error: '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
+           Log::error('Payrexx Error: '.$e->getMessage(),  [
+               'file' => $e->getFile(),
+               'line' => $e->getLine(),
+               'secret' => $secret,
+               'instance_name' => $instanceName,
+           ]);
         }
 
         return false;
