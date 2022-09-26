@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use Payrexx\Models\Request\Gateway;
 use Payrexx\Payrexx;
+use Illuminate\Support\Facades\Log;
 
 class G2FApiService extends Constants
 {
@@ -82,6 +83,31 @@ class G2FApiService extends Constants
 
         if($response) {
            return json_decode($response->getBody());
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $merchantId
+     * @return string|null
+     */
+    public function getVerivication(string $merchantId): null|string
+    {
+        $response = $this->sendRequest( 'GET','service/merchant/'.$merchantId.'/verification', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        if($response) {
+           $data = json_decode($response->getBody());
+           if (!empty($data['data']['status'])) {
+                return $data['data']['status'];
+           } else {
+               Log::error('PSP Error while reading kyc status response.', $data);
+           }
         }
 
         return null;
