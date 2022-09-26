@@ -103,8 +103,8 @@ class G2FApiService extends Constants
 
         if($response) {
            $data = json_decode($response->getBody());
-           if (!empty($data['data']['status'])) {
-                return $data['data']['status'];
+           if ($data->data) {
+                return $data->data->status;
            } else {
                Log::error('PSP Error while reading kyc status response.', $data);
            }
