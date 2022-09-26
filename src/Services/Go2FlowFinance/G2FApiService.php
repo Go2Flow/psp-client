@@ -2,6 +2,7 @@
 
 namespace Go2Flow\PSPClient\Services\Go2FlowFinance;
 
+use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Bank;
 use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Merchant;
 use Go2Flow\SaasRegisterLogin\Models\Team;
 use GuzzleHttp\Client;
@@ -165,6 +166,23 @@ class G2FApiService extends Constants
     {
         $response = $this->sendRequest( 'PATCH','service/merchant/'.$merchant->getId(), [
             'body' => $merchant->toJson(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        return $response->getBody();
+    }
+
+    /**
+     * @param Bank $bank
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    public function updateBank(Bank $bank): \Psr\Http\Message\StreamInterface
+    {
+        $response = $this->sendRequest( 'PATCH','service/merchant/'.$bank->getMerchantId().'/verification/bank_account/'.$bank->getCurrency(), [
+            'body' => $bank->toJson(),
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',

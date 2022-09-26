@@ -45,7 +45,6 @@ class PaymentController extends Controller
     public function updatePSPConfiguration()
     {
         $go2finance = new G2FApiService();
-        $configuration = $go2finance->updatePSPConfiguration();
-        return $configuration;
+        return $go2finance->updatePSPConfiguration();
     }
 }
