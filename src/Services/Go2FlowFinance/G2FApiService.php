@@ -3,6 +3,7 @@
 namespace Go2Flow\PSPClient\Services\Go2FlowFinance;
 
 use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Bank;
+use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Invoice;
 use Go2Flow\PSPClient\Services\Go2FlowFinance\Models\Merchant;
 use Go2Flow\SaasRegisterLogin\Models\Team;
 use GuzzleHttp\Client;
@@ -205,5 +206,26 @@ class G2FApiService extends Constants
         dd(json_decode($response->getBody()));
 
         return $response->getBody();
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return false|mixed
+     */
+    public function createInvoice(Invoice $invoice)
+    {
+        $response = $this->sendRequest( 'POST','service/merchant/'.$invoice->getMerchantId().'/invoice', [
+            'body' => $invoice->toJson(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        if($response && $response->getStatusCode() === 200) {
+            return json_decode($response->getBody()->getContents(), true);
+        }
+
+        return false;
     }
 }
