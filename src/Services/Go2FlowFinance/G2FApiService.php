@@ -228,4 +228,24 @@ class G2FApiService extends Constants
 
         return false;
     }
+
+    /**
+     * @param string $merchantId
+     * @param string $invoiceId
+     * @return false|mixed
+     */
+    public function getInvoice(string $merchantId, string $invoiceId)
+    {
+        $response = $this->sendRequest( 'GET','service/merchant/'.$merchantId.'/invoice/'.$invoiceId, [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        if($response && $response->getStatusCode() === 200) {
+            return json_decode($response->getBody()->getContents(), true);
+        }
+
+        return false;
+    }
 }
