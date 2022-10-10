@@ -167,10 +167,10 @@ class Personal
     }
 
     /**
-     * @param string $vat_nr
+     * @param string|null $vat_nr
      * @return $this
      */
-    public function setVatNr(string $vat_nr): static
+    public function setVatNr(?string $vat_nr): static
     {
         $this->personal->put('vat_nr', $vat_nr);
 
