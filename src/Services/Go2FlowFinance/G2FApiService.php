@@ -126,16 +126,19 @@ class G2FApiService extends Constants
      */
     public function createWebhook(string $merchantId, string $url): bool
     {
-        $response = $this->sendRequest( 'POST','service/merchant/'.$merchantId.'/api/webhook', [
-            'body' => '{"type":"json","url":'.$url.'}',
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-
-        if($response && $response->getStatusCode() === 200) {
-            return true;
+        try {
+            $response = $this->sendRequest('POST', 'service/merchant/' . $merchantId . '/api/webhook', [
+                'body' => '{"type":"json","url":"' . $url . '"}',
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+            ]);
+            if ($response && $response->getStatusCode() === 200) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage(), $e->getTrace());
         }
 
         return false;
