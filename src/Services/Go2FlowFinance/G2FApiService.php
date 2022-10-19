@@ -86,7 +86,10 @@ class G2FApiService extends Constants
         if($response) {
             $responseObj = json_decode($response->getBody());
             if ($responseObj->data && $responseObj->data->id) {
-                return $responseObj->data->id;
+                if (is_string($responseObj->data->id)) {
+                    return $responseObj->data->id;
+                }
+                Log::error('WRONG RESULT IN createMerchant', [$responseObj->data->id]);
             }
             Log::error('WRONG RESULT IN createMerchant', [$response->getBody()]);
         }
