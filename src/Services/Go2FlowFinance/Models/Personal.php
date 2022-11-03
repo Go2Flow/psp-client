@@ -117,6 +117,7 @@ class Personal
      */
     public function setPhoneNumber($phone_number): static
     {
+        $phone_number = str_replace(' ', '', $phone_number);
         $this->personal->put('phone_number', $phone_number);
 
         return $this;
