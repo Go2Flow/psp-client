@@ -50,21 +50,12 @@ class G2FApiService extends Constants
     private function sendRequest($method, $path, $payload): ?Response
     {
         try {
-
             $client = $this->getClient();
             return $client->request($method, $path, $payload);
 
         } catch (\Exception $e) {
-            echo "---------------------EXCEPTION------------------------\n";
-            echo $e->getMessage()."\n";
-            echo $e->getResponse()->getBody()->getContents()."\n";
-            var_dump($payload);
-            echo "------------------------------------------------------\n";
-        } catch (GuzzleException $e) {
-            echo "-------------------GUZZLE EXCEPTION-------------------\n";
-            echo $e->getResponse()->getBody()->getContents()."\n";
-            var_dump($payload);
-            echo "------------------------------------------------------\n";
+            Log::error($e->getMessage(), $e->getTrace());
+            Log::error('Payload to previous error', [$method, $path, $payload]);
         }
         return null;
     }
