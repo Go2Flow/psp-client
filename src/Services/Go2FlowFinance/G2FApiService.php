@@ -122,7 +122,7 @@ class G2FApiService extends Constants
     {
         try {
             $response = $this->sendRequest('POST', 'service/merchant/' . $merchantId . '/api/webhook', [
-                'body' => '{"type":"json","url":"' . $url . '"}',
+                'body' => '{"type":"x-form","url":"' . $url . '"}',
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
