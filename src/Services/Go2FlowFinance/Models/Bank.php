@@ -42,7 +42,7 @@ class Bank
      */
     public function getCurrency() :string
     {
-        return $this->currency;
+        return strtoupper($this->currency);
     }
 
     /**
