@@ -78,10 +78,10 @@ class Bank
     }
 
     /**
-     * @param string $bic
+     * @param string|null $bic
      * @return $this
      */
-    public function setBic(string $bic): static
+    public function setBic(?string $bic): static
     {
         $this->bank->put('bic', $bic);
 
