@@ -195,12 +195,12 @@ class G2FApiService extends Constants
     }
 
     /**
-     * @param Bank $bank
+     * @param Team $team
      * @return \Psr\Http\Message\StreamInterface
      */
-    public function listBank(Bank $bank): \Psr\Http\Message\StreamInterface
+    public function listBank(Team $team): \Psr\Http\Message\StreamInterface
     {
-        $response = $this->sendRequest( 'GET','service/merchant/'.$bank->getMerchantId().'/verification/bank_account', [
+        $response = $this->sendRequest( 'GET','service/merchant/'.$team->psp_id.'/verification/bank_account', [
             'headers' => [
                 'Accept' => 'application/json',
             ],
