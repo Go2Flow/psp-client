@@ -194,6 +194,21 @@ class G2FApiService extends Constants
         return $response->getBody();
     }
 
+    /**
+     * @param Bank $bank
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    public function listBank(Bank $bank): \Psr\Http\Message\StreamInterface
+    {
+        $response = $this->sendRequest( 'GET','service/merchant/'.$bank->getMerchantId().'/verification/bank_account', [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        return $response->getBody();
+    }
+
     public function updatePSPConfiguration()
     {
         $response = $this->sendRequest('POST', 'service/merchant/23996647/user/login', [
