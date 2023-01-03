@@ -55,7 +55,7 @@ abstract class Base
     public abstract function getResponseModel();
 
     /**
-     * @return integer
+     * @return mixed
      */
     public function getId()
     {
@@ -63,7 +63,7 @@ abstract class Base
     }
 
     /**
-     * @param integer $id
+     * @param $id
      */
     public function setId($id)
     {
