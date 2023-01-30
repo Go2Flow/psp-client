@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Payrexx\Models\Request\Gateway;
+use Payrexx\Models\Request\PaymentProvider;
 use Payrexx\Models\Request\Transaction;
 use Payrexx\Payrexx;
 
@@ -74,9 +75,9 @@ class G2FMerchantApiService extends Constants
     public function getAvailablePaymentMethods(string $instanceName, string $secret): array
     {
 
-        $payrexx = new \Payrexx\Payrexx($instanceName, $secret);
+        $payrexx = new Payrexx($instanceName, $secret);
 
-        $provider = new \Payrexx\Models\Request\PaymentProvider();
+        $provider = new PaymentProvider();
 
         $availableMethods = [];
 
@@ -139,7 +140,7 @@ class G2FMerchantApiService extends Constants
             return $payrexx->create($gateway);
 
         } catch (\Payrexx\PayrexxException $e) {
-           Log::error('Payrexx Error: '.$e->getMessage(),  [
+           Log::error('Payrexx Error (createGateway): '.$e->getMessage(),  [
                'file' => $e->getFile(),
                'line' => $e->getLine(),
                'secret' => $secret,
@@ -166,7 +167,7 @@ class G2FMerchantApiService extends Constants
             return $payrexx->refund($transaction);
 
         } catch (\Payrexx\PayrexxException $e) {
-            Log::error('Payrexx Error: '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
+            Log::error('Payrexx Error (createRefund): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine(), 'payload' => $transaction->toArray('refund')]);
         }
 
         return null;
