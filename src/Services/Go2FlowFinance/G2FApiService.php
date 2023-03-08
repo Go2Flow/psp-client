@@ -20,10 +20,6 @@ class G2FApiService extends Constants
      */
     protected $client = false;
 
-    protected $apiKey = "%u%B*CEv4*9hZGzfdR!w2Vn!QpZtn!";
-
-    protected $domain = 'https://api.go2flow.finance/v2.0/';
-
     /**
      * @return Client
      */
@@ -34,8 +30,8 @@ class G2FApiService extends Constants
         }
 
         $this->client = new Client([
-            'base_uri' => $this->domain,
-            'headers' => ['X-API-KEY' => $this->apiKey]
+            'base_uri' => config('psp-client.api_domain'),
+            'headers' => ['X-API-KEY' => config('psp-client.api_key')]
         ]);
 
         return $this->client;
