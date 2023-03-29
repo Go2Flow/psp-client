@@ -17,15 +17,15 @@ $instanceName = 'YOUR_INSTANCE_NAME';
 $secret = 'YOUR_SECRET';
 
 $payrexx = new \Payrexx\Payrexx($instanceName, $secret);
-$payrexx->setHttpHeaders([
-    'Shop-ID' => 1,
-]);
 
-$signatureCheck = new \Payrexx\Models\Request\SignatureCheck();
+$qrCode = new \Payrexx\Models\Request\QrCode();
+// UUIDv4
+$qrCode->setUuid('QR_CODE_UUID');
+
 try {
-    $payrexx->getOne($signatureCheck);
-    die('Signature correct');
+    /** @var \Payrexx\Models\Response\QrCode $response */
+    $response = $payrexx->getOne($qrCode);
+    var_dump($response);
 } catch (\Payrexx\PayrexxException $e) {
     print $e->getMessage();
-    die('Signature wrong');
 }

@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(function($class) {
+spl_autoload_register(function ($class) {
     $root = dirname(__DIR__);
     $classFile = $root . '/lib/' . str_replace('\\', '/', $class) . '.php';
     if (file_exists($classFile)) {
@@ -17,15 +17,14 @@ $instanceName = 'YOUR_INSTANCE_NAME';
 $secret = 'YOUR_SECRET';
 
 $payrexx = new \Payrexx\Payrexx($instanceName, $secret);
-$payrexx->setHttpHeaders([
-    'Shop-ID' => 1,
-]);
 
-$signatureCheck = new \Payrexx\Models\Request\SignatureCheck();
+$transaction = new \Payrexx\Models\Request\Transaction();
+$transaction->setId(1);
+$transaction->setRecipient('recipient@gmail.com');
+
 try {
-    $payrexx->getOne($signatureCheck);
-    die('Signature correct');
+    $response = $payrexx->receipt($transaction);
+    var_dump($response);
 } catch (\Payrexx\PayrexxException $e) {
     print $e->getMessage();
-    die('Signature wrong');
 }

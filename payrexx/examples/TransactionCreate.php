@@ -18,13 +18,24 @@ $secret = 'YOUR_SECRET';
 
 $payrexx = new \Payrexx\Payrexx($instanceName, $secret);
 
-$qrCode = new \Payrexx\Models\Request\QrCode();
+$transaction = new \Payrexx\Models\Request\Transaction();
 
-// An URL where the your customer has to be redirected when they scanned your QR Code.
-$qrCode->setWebshopUrl('YOUR_WEBSHOP_URL');
+// amount multiplied by 100
+$transaction->setAmount(89.25 * 100);
+
+// VAT rate percentage (nullable)
+$transaction->setVatRate(7.70);
+
+// currency ISO code
+$transaction->setCurrency('CHF');
+
+// optional: add contact information which should be stored along with payment
+$transaction->addField($type = 'forename', $value = 'Max');
+$transaction->addField($type = 'surname', $value = 'Mustermann');
+$transaction->addField($type = 'email', $value = 'max.muster@payrexx.com');
 
 try {
-    $response = $payrexx->create($qrCode);
+    $response = $payrexx->create($transaction);
     var_dump($response);
 } catch (\Payrexx\PayrexxException $e) {
     print $e->getMessage();

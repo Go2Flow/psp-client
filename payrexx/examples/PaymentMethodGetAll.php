@@ -1,6 +1,10 @@
 <?php
 
-spl_autoload_register(function($class) {
+use Payrexx\Models\Request\PaymentMethod;
+use Payrexx\Payrexx;
+use Payrexx\PayrexxException;
+
+spl_autoload_register(function ($class) {
     $root = dirname(__DIR__);
     $classFile = $root . '/lib/' . str_replace('\\', '/', $class) . '.php';
     if (file_exists($classFile)) {
@@ -16,16 +20,19 @@ $instanceName = 'YOUR_INSTANCE_NAME';
 // if you think someone got your secret, just regenerate it in the payrexx administration
 $secret = 'YOUR_SECRET';
 
-$payrexx = new \Payrexx\Payrexx($instanceName, $secret);
-$payrexx->setHttpHeaders([
-    'Shop-ID' => 1,
-]);
+$payrexx = new Payrexx($instanceName, $secret);
 
-$signatureCheck = new \Payrexx\Models\Request\SignatureCheck();
+$paymentMethod = new PaymentMethod();
+// $paymentMethod->setFilterCurrency('CHF');
+// $paymentMethod->setFilterPaymentType('one-time');
+// $paymentMethod->setFilterPsp(36);
+
 try {
-    $payrexx->getOne($signatureCheck);
-    die('Signature correct');
-} catch (\Payrexx\PayrexxException $e) {
+    $response = $payrexx->getAll($paymentMethod);
+    echo '<pre>';
+    var_dump($response);
+    echo '</pre>';
+    exit();
+} catch (PayrexxException $e) {
     print $e->getMessage();
-    die('Signature wrong');
 }
