@@ -173,16 +173,18 @@ class G2FMerchantApiService extends Constants
     /**
      * @param string $instanceName
      * @param string $secret
-     * @return null
+     * @param $uuid
+     * @return \Payrexx\Models\Response\Payout|null
      * @throws \Payrexx\PayrexxException
      */
-    public function getPayouts(string $instanceName, string $secret)
+    public function getPayouts(string $instanceName, string $secret, $uuid): ?\Payrexx\Models\Response\Payout
     {
         $payrexx = new Payrexx($instanceName, $secret);
 
         try {
             $payout = new Payout();
-            return $payrexx->getAll($payout);
+            $payout->setUuid($uuid);
+            return $payrexx->getOne($payout);
 
         } catch (\Payrexx\PayrexxException $e) {
             Log::error('Payrexx Error (getPayouts): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
