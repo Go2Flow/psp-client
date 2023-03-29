@@ -168,9 +168,4 @@ class G2FMerchantApiService extends Constants
 
         return null;
     }
-
-    public function getPayouts(string $instanceName)
-    {
-        return $this->sendRequest('GET', '/Payout/', ['instance' => $instanceName]);
-    }
 }
