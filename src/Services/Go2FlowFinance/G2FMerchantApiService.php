@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Payrexx\Models\Request\Gateway;
 use Payrexx\Models\Request\PaymentProvider;
+use Payrexx\Models\Request\Payout;
 use Payrexx\Models\Request\Transaction;
 use Payrexx\Payrexx;
 
@@ -164,6 +165,27 @@ class G2FMerchantApiService extends Constants
 
         } catch (\Payrexx\PayrexxException $e) {
             Log::error('Payrexx Error (createRefund): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine(), 'payload' => $transaction->toArray('refund')]);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $instanceName
+     * @param string $secret
+     * @return null
+     * @throws \Payrexx\PayrexxException
+     */
+    public function getPayouts(string $instanceName, string $secret)
+    {
+        $payrexx = new Payrexx($instanceName, $secret);
+
+        try {
+            $payout = new Payout();
+            return $payrexx->getAll($payout);
+
+        } catch (\Payrexx\PayrexxException $e) {
+            Log::error('Payrexx Error (getPayouts): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
         }
 
         return null;
