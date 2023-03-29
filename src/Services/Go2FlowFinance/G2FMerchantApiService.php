@@ -47,14 +47,14 @@ class G2FMerchantApiService extends Constants
             $client = $this->getClient();
             return $client->request($method, $path, $payload);
 
-        } catch (\Exception $e) {
-            echo "---------------------EXCEPTION------------------------\n";
-            echo $e->getMessage()."\n";
+        } catch (GuzzleException $e) {
+            echo "-------------------GUZZLE EXCEPTION-------------------\n";
             echo $e->getResponse()->getBody()->getContents()."\n";
             var_dump($payload);
             echo "------------------------------------------------------\n";
-        } catch (GuzzleException $e) {
-            echo "-------------------GUZZLE EXCEPTION-------------------\n";
+        } catch (\Exception $e) {
+            echo "---------------------EXCEPTION------------------------\n";
+            echo $e->getMessage()."\n";
             echo $e->getResponse()->getBody()->getContents()."\n";
             var_dump($payload);
             echo "------------------------------------------------------\n";
@@ -167,5 +167,10 @@ class G2FMerchantApiService extends Constants
         }
 
         return null;
+    }
+
+    public function getPayouts(string $instanceName)
+    {
+        return $this->sendRequest('GET', '/Payout/', ['instance' => $instanceName]);
     }
 }
