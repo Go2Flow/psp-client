@@ -177,7 +177,7 @@ class G2FMerchantApiService extends Constants
      * @return \Payrexx\Models\Response\Payout|null
      * @throws \Payrexx\PayrexxException
      */
-    public function getPayouts(string $instanceName, string $secret, $uuid): ?\Payrexx\Models\Response\Payout
+    public function getPayout(string $instanceName, string $secret, $uuid): ?\Payrexx\Models\Response\Payout
     {
         $payrexx = new Payrexx($instanceName, $secret);
 
