@@ -214,4 +214,26 @@ class G2FMerchantApiService extends Constants
 
         return null;
     }
+
+    /**
+     * @param string $instanceName
+     * @param string $secret
+     * @param Transaction $transaction
+     * @return \Payrexx\Models\Response\Transaction|null
+     * @throws \Payrexx\PayrexxException
+     */
+    public function chargePreAuthorized(string $instanceName, string $secret, Transaction $transaction): ?\Payrexx\Models\Response\Transaction
+    {
+        $payrexx = new Payrexx($instanceName, $secret);
+
+        try {
+
+            return $payrexx->charge($transaction);
+
+        } catch (\Payrexx\PayrexxException $e) {
+            Log::error('Payrexx Error (chargePreAuthorized): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine(), 'payload' => $transaction->toArray('charge')]);
+        }
+
+        return null;
+    }
 }
