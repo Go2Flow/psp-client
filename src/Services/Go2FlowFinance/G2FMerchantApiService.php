@@ -192,4 +192,26 @@ class G2FMerchantApiService extends Constants
 
         return null;
     }
+
+    /**
+     * @param string $instanceName
+     * @param string $secret
+     * @param $id
+     * @return \Payrexx\Models\Response\Gateway|null
+     * @throws \Payrexx\PayrexxException
+     */
+    public function getGateway(string $instanceName, string $secret, $id): ?\Payrexx\Models\Response\Gateway
+    {
+        $payrexx = new Payrexx($instanceName, $secret);
+        $gateway = new \Payrexx\Models\Request\Gateway();
+        $gateway->setId($id);
+
+        try {
+            return $payrexx->getOne($gateway);
+        } catch (\Payrexx\PayrexxException $e) {
+            Log::error('Payrexx Error (getPayouts): '.$e->getMessage(),  ['file' => $e->getFile(), 'line' => $e->getLine()]);
+        }
+
+        return null;
+    }
 }
