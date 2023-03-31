@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Payrexx\Models\Request\Gateway;
+use Payrexx\Models\Request\PaymentMethod;
 use Payrexx\Models\Request\PaymentProvider;
 use Payrexx\Models\Request\Payout;
 use Payrexx\Models\Request\Transaction;
@@ -69,24 +70,25 @@ class G2FMerchantApiService extends Constants
      * @return array
      * @throws \Payrexx\PayrexxException
      */
-    public function getAvailablePaymentMethods(string $instanceName, string $secret): array
+    public function getAvailablePaymentMethods(string $instanceName, string $secret, ?string $type = null): array
     {
 
         $payrexx = new Payrexx($instanceName, $secret);
 
-        $provider = new PaymentProvider();
+        $provider = new PaymentMethod();
 
         $availableMethods = [];
 
         try {
-
+            if ($type) {
+                $provider->setFilterPaymentType($type);
+            }
             $response = $payrexx->getAll($provider);
-
             foreach ($response as $provider) {
                 /**
-                 * @var \Payrexx\Models\Response\PaymentProvider $provider
+                 * @var \Payrexx\Models\Response\PaymentMethod $provider
                  */
-                $availableMethods = array_merge($availableMethods, $provider->getActivePaymentMethods());
+                $availableMethods = array_merge($availableMethods, [$provider->getId()]);
             }
 
 

@@ -32,12 +32,17 @@ class PaymentController extends Controller
     public function getAvailablePaymentMethods(): \Illuminate\Http\JsonResponse
     {
         $team = auth()->user();
-        return Cache::remember('psp_client_payment_methods_'.$team->id, 60*30, function () use ($team) {
+        $typeFilter = request()->get('type', null);
+        $cacheKey = 'psp_client_payment_methods_'.$team->id;
+        if ($typeFilter) {
+            $cacheKey = $cacheKey.'_'.$typeFilter;
+        }
+        return Cache::remember($cacheKey, 60*30, function () use ($team, $typeFilter) {
             $go2finance = new G2FApiService();
             $apiSecret = $go2finance->getMerchantApiSecret($team);
 
             $go2finance = new G2FMerchantApiService();
-            $paymentMethods = $go2finance->getAvailablePaymentMethods($team->psp_instance, $apiSecret);
+            $paymentMethods = $go2finance->getAvailablePaymentMethods($team->psp_instance, $apiSecret, $typeFilter);
             return response()->json(['paymentMethods' => $paymentMethods]);
         });
     }
